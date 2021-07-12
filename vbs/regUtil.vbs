@@ -169,7 +169,7 @@ Function ArrayRemoveAt(arr, pos)
 End Function
 
 Sub ParseHiveAndSubKeyAndValue(strRawKey, outConstHive, outStrSubKey, outStrValue)
-	arrSplitted = Split(strRawKey, "¶", -1, 1)
+	arrSplitted = Split(strRawKey, "#@#", -1, 1)
 	If UBound(arrSplitted) > 0 Then
 		strRawKey = arrSplitted(0)
 		outStrValue = arrSplitted(1)
