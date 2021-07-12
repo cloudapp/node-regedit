@@ -169,15 +169,24 @@ Function ArrayRemoveAt(arr, pos)
 End Function
 
 Sub ParseHiveAndSubKeyAndValue(strRawKey, outConstHive, outStrSubKey, outStrValue)
-	' split into two parts to deduce the hive and the sub key
+	arrSplitted = Split(strRawKey, "¶", -1, 1)
+	If UBound(arrSplitted) > 0 Then
+		strRawKey = arrSplitted(0)
+		outStrValue = arrSplitted(1)
+	End If
+
 	arrSplitted = Split(strRawKey, "\", -1, 1)
 
 	If UBound(arrSplitted) > 0 Then
 		strHive = arrSplitted(0)
-        outStrValue = arrSplitted(UBound(arrSplitted))
-        test = ArrayRemoveAt(arrSplitted, UBound(arrSplitted))
-        test = ArrayRemoveAt(arrSplitted, 0)
-        outStrSubKey = Join(arrSplitted, "\")
+    test = ArrayRemoveAt(arrSplitted, 0)
+
+    If isEmpty(outStrValue) Then
+      outStrValue = arrSplitted(UBound(arrSplitted))
+      test = ArrayRemoveAt(arrSplitted, UBound(arrSplitted))
+    End If
+
+    outStrSubKey = Join(arrSplitted, "\")
 	Else
 		strHive = strRawKey
 		outStrSubKey = ""
